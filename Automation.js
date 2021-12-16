@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 
 const gmailProcess = async function (link) {
-
+  try {
   const args = ["--no-sandbox", "--disable-setuid-sandbox"];
   const browser = await puppeteer.launch({
     executablePath:
@@ -70,16 +70,18 @@ const gmailProcess = async function (link) {
 
   // await browser.close();
   console.log(a)
-  if (a == null) {
-    return res.status(400).send({status: false, message:"Can not send ID"});
-  }
+  
   return a;
+} catch (error) {
+  console.error(error);
+    return;
+}
 };
 
 
 
 const gmailProcess1 = async function (link) {
-
+try{
   const args = ["--no-sandbox", "--disable-setuid-sandbox"];
   const browser = await puppeteer.launch({
     executablePath:
@@ -132,10 +134,14 @@ const gmailProcess1 = async function (link) {
  const a = await page.evaluate(() =>    document.querySelector(".ant-input").getAttribute("value") )
 console.log(a)
  
- 
+} catch (error) {
+  console.error(error);
+    return;
+}
   
   return a;
 };
+
 module.exports = {
   gmailProcess1,
   gmailProcess,

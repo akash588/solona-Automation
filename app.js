@@ -3,6 +3,7 @@ const app = express();
 
 const bodyParser = require("body-parser");
 Automation = require("./Automation");
+PolygonScan = require("./polygonscan")
 
 app.use(express.json({ limit: "125mb" }));
 
@@ -15,18 +16,50 @@ app.get("/", (req, res) => {
 app.post("/init", async (req, res) => {
   let { link } = req.body;
   let tokenId = await Automation.gmailProcess(link);
-  res.json({
-    status: true,
-    data: tokenId
-  })
+  if(tokenId) {
+    res.json({
+      status: true,
+      data: tokenId
+    }) }
+    else{
+      res.json({
+        status: false,
+        data:[]
+      })
+  
+    }
 });
 app.post("/init1", async (req, res) => {
   let { link } = req.body;
   let tokenId = await Automation.gmailProcess1(link);
+  if(tokenId) {
+    res.json({
+      status: true,
+      data: tokenId
+    }) }
+    else{
+      res.json({
+        status: false,
+        data:[]
+      })
+  
+    }
+});
+app.post("/polygon", async (req, res) => {
+  let { link } = req.body;
+  let tokenId = await PolygonScan.polygon(link);
+  if(tokenId) {
   res.json({
     status: true,
     data: tokenId
-  })
+  }) }
+  else{
+    res.json({
+      status: false,
+      data:[]
+    })
+
+  }
 });
 
 
